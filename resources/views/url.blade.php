@@ -22,11 +22,33 @@
     </head>
     <body class="antialiased">
     <center>
+        <div>
         <a class="nav-link" href="/">[Анализатор страниц]</a>
         <a class="nav-link" href="/urls">[Все добавленные страницы]</a>
-        <form action="/" method="post">
-            <input type="text" name="url[name]" value="" class="form-control form-control-lg" placeholder="https://www.example.com">
-            <button type="submit">Проверить</button>
-        </form>
+        </div>
+
+        <div class="container-lg">
+            <h1 class="mt-5 mb-3">Страницы</h1>
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover text-nowrap">
+                    <tbody><tr>
+                        <th>ID</th>
+                        <th>Имя</th>
+                        <th>Дата создания</th>
+                        <th>Дата обновления</th>
+                    </tr>
+                        @foreach ($url as $row)
+                            <tr>
+                            <th>{{ $row->id }}</th>
+                            <th>{{ $row->name }}</th>
+                            <th>{{ $row->created_at }}</th>
+                            <th>{{ $row->updated_at }}</th>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </center>
+    </body>
 </html>

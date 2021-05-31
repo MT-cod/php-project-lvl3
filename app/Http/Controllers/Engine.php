@@ -10,7 +10,7 @@ class Engine extends Controller
 {
     public function addUrl(Request $request): \Illuminate\Http\RedirectResponse
     {
-        $url = $this->validateUrl($request->input('url.name'));
+        $url = $this->validateAndFilterUrl($request->input('url.name'));
         if ($url !== false) {
             DB::table('urls')->upsert(
                 [['name' => $url, 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()]],
@@ -21,8 +21,25 @@ class Engine extends Controller
         return redirect()->route('home');
     }
 
-    public function validateUrl(string $url): string | bool
+    public function showUrls(): \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
     {
-        return filter_var($url, FILTER_VALIDATE_URL);
+        $urls = DB::table('urls')->paginate(15);
+        return view('urls', ['urls' => $urls]);
+    }
+
+    public function showUrl(int $id): \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
+    {
+        $url = DB::table('urls')->where('id', '=', $id)->get();
+        return view('url', ['url' => $url]);
+    }
+
+    public function validateAndFilterUrl(string $url): string | bool
+    {
+        $scheme = (string) parse_url($url, PHP_URL_SCHEME);
+        $host = (string) parse_url($url, PHP_URL_HOST);
+        if (($scheme == 'http' || $scheme == 'https') && !empty($host)) {
+            return $scheme . '://' . $host;
+        }
+        return false;
     }
 }
