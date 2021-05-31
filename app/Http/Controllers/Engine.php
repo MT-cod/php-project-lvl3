@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 use Carbon\Carbon;
 
 class Engine extends Controller
@@ -17,13 +18,16 @@ class Engine extends Controller
                 ['name'],
                 ['updated_at']
             );
+            Session::flash('flash_mess_add_success', 'Страница добавлена');
+        } else {
+            Session::flash('flash_mess_add_error', 'Некорректный адрес: ' . $request->input('url.name'));
         }
         return redirect()->route('home');
     }
 
     public function showUrls(): \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
     {
-        $urls = DB::table('urls')->paginate(15);
+        $urls = DB::table('urls')->orderBy('id')->simplePaginate(20);
         return view('urls', ['urls' => $urls]);
     }
 
