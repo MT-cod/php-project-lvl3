@@ -1,0 +1,19 @@
+name: PHP CI
+on:
+  - push
+  - pull_request
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+
+      - name: PHP Security Checker
+        uses: StephaneBour/actions-php-security-checker@1.1
+
+      - name: Setup project
+        run: make setup
+
+      - name: Check lint
+        run: make lint
