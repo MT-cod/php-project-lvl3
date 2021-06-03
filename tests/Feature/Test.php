@@ -18,6 +18,7 @@ class Test extends TestCase
         Artisan::call('migrate');
         Artisan::call('db:seed');
     }
+
     public function testIndex(): void
     {
         $response = $this->get(route('home'));
@@ -26,13 +27,30 @@ class Test extends TestCase
     public function testAddUrl(): void
     {
         $response = $this->post(route('addUrl'), ['url' => ['name' => 'http://kaka.com']]);
-        $this->assertDatabaseHas('urls', [
-            'name' => 'http://kaka.com',
-        ]);
+        $this->assertDatabaseHas('urls', ['name' => 'http://kaka.com']);
         $response->assertStatus(302);
 
         //$response->dumpHeaders();
         //$response->dumpSession();
         //$response->dump();
+    }
+    public function testShowUrls(): void
+    {
+        $this->post(route('addUrl'), ['url' => ['name' => 'http://kaka.com']]);
+        $response = $this->get(route('showUrls'));
+        $response->assertOk();
+        $response->assertSee('http://kaka.com', $escaped = true);
+    }
+    public function testShowUrl(): void
+    {
+        $this->post(route('addUrl'), ['url' => ['name' => 'http://kaka.com']]);
+        $response = $this->get(route('showUrl', ['id' => 1]));
+        $response->assertOk();
+        $response->assertSee('http://kaka.com', $escaped = true);
+    }
+
+    protected function tearDown(): void
+    {
+        parent::tearDown();
     }
 }
