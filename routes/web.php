@@ -23,4 +23,4 @@ Route::get('urls', [Engine::class, 'showUrls'])->name('showUrls');
 
 Route::get('/urls/{id}', [Engine::class, 'showUrl'])->name('showUrl');
 
-Route::post('/', [Engine::class, 'addUrl']);
+Route::post('/', [Engine::class, 'addUrl'])->name('addUrl');
