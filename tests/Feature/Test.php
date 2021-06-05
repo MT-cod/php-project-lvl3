@@ -48,6 +48,12 @@ class Test extends TestCase
         $response->assertOk();
         $response->assertSee('http://kaka.com', $escaped = true);
     }
+    public function testCheckUrl(): void
+    {
+        $this->post(route('addUrl'), ['url' => ['name' => 'http://kaka.com']]);
+        $this->post('/urls/{id}/checks', ['id' => 1]);
+        $this->assertDatabaseHas('url_checks', ['id' => 1, 'url_id' => 1]);
+    }
 
     protected function tearDown(): void
     {

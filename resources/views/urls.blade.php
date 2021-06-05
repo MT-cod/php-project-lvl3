@@ -15,7 +15,7 @@
             }
         </style>
     </head>
-    <body style="text-align: center;">
+    <body style="text-align: center; background-color: #dbe8f3;">
     <center>
         <div>
         <a class="nav-link" href="/">[Анализатор страниц]</a>

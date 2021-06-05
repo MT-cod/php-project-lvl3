@@ -15,7 +15,7 @@
             }
         </style>
     </head>
-    <body style="text-align: center;">
+    <body style="text-align: center; background-color: #dbe8f3;">
         @if(Session::has('flash_mess_add_success'))
             <div style="background-color: #7fe2b4">{!! session('flash_mess_add_success') !!}</div>
         @elseif(Session::has('flash_mess_add_error'))

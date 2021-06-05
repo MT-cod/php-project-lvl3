@@ -15,15 +15,24 @@
             }
         </style>
     </head>
-    <body  style="text-align: center;">
+    <body  style="text-align: center; background-color: #dbe8f3;">
     <center>
+
+        @if(Session::has('flash_mess_check_success'))
+            <div style="background-color: #7fe2b4">{!! session('flash_mess_check_success') !!}</div>
+        @elseif(Session::has('flash_mess_check_error'))
+            <div style="background-color: #ff885a">{!! session('flash_mess_check_error') !!}</div>
+        @else
+            <br>
+        @endif
+
         <div>
         <a class="nav-link" href="/">[Анализатор страниц]</a>
         <a class="nav-link" href="/urls">[Все добавленные страницы]</a>
         </div>
 
         <div class="container-lg">
-            <h1 class="mt-5 mb-3">Страницы</h1>
+            <h1 class="mt-5 mb-3">Страница: {{ $url->name }}</h1>
             <div class="table-responsive">
                 <table  style="table-layout: auto; width: auto;">
                     <tbody><tr style="background-color: #9acfd4;">
@@ -32,18 +41,44 @@
                         <th>Дата создания</th>
                         <th>Дата обновления</th>
                     </tr>
-                        @foreach ($url as $row)
-                            <tr style="background-color: #bddfe2;">
-                            <th>{{ $row->id }}</th>
-                            <th>{{ $row->name }}</th>
-                            <th>{{ $row->created_at }}</th>
-                            <th>{{ $row->updated_at }}</th>
-                            </tr>
-                        @endforeach
-                    </tbody>
+                        <tr style="background-color: #bddfe2;">
+                        <th>{{ $url->id }}</th>
+                        <th>{{ $url->name }}</th>
+                        <th>{{ $url->created_at }}</th>
+                        <th>{{ $url->updated_at }}</th>
+                        </tr>
+                </tbody>
                 </table>
             </div>
         </div>
-        </center>
+<br>
+        <form action="/urls/{id}/checks" method="post">
+            <input type="hidden" value="{{ $id }}" name="id"/>
+            <button type="submit">Проверить</button>
+        </form>
+
+        <table  style="table-layout: auto; width: auto;">
+            <tbody><tr style="background-color: #a4e7ac;">
+                <th>ID</th>
+                <th>Код ответа</th>
+                <th>h1</th>
+                <th>keywords</th>
+                <th>description</th>
+                <th>Дата создания</th>
+            </tr>
+            @foreach ($dataOfCheck as $row)
+                <tr style="background-color: #c2f3d7;">
+                    <th>{{ $row->id }}</th>
+                    <th>{{ $row->status_code }}</th>
+                    <th>{{ $row->h1 }}</th>
+                    <th>{{ $row->keywords }}</th>
+                    <th>{{ $row->description }}</th>
+                    <th>{{ $row->created_at }}</th>
+                </tr>
+            @endforeach
+            </tbody>
+        </table>
+
+    </center>
     </body>
 </html>
