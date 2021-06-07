@@ -2,8 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Http\Client\RequestException;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Session;
 use Carbon\Carbon;
 
@@ -18,16 +23,30 @@ class Engine extends Controller
                 ['name'],
                 ['updated_at']
             );
-            Session::flash('flash_mess_add_success', 'Страница добавлена');
+            Session::flash('flash_mess_add_success', 'Страница успешно добавлена');
         } else {
-            Session::flash('flash_mess_add_error', 'Некорректный адрес: ' . $request->input('url.name'));
+            Session::flash('flash_mess_add_error', 'Некорректный URL: ' . $request->input('url.name'));
         }
         return redirect()->route('home');
     }
 
     public function showUrls(): \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
     {
-        $urls = DB::table('urls')->orderBy('id')->simplePaginate(20);
+        $querry = DB::select('
+        select id, name, updated_at, sel2.status as status_code from urls LEFT JOIN
+        (select url_id as sel_url_id, status_code as status from url_checks JOIN
+        (select max(id) as sel_id, url_id as sel_url_id from url_checks group by url_id) as sel
+        on url_checks.id = sel.sel_id
+        where url_id = sel.sel_url_id) as sel2
+        on urls.id = sel2.sel_url_id
+        order by urls.id;
+        ');
+        $currentPage = LengthAwarePaginator::resolveCurrentPage();
+        $urlsColl = new Collection($querry);
+        $perPage = 25;
+        $currentPageSearchResults = $urlsColl->slice(($currentPage - 1) * $perPage, $perPage)->all();
+        $urls = new LengthAwarePaginator($currentPageSearchResults, count($urlsColl), $perPage);
+        $urls->withPath('urls');
         return view('urls', ['urls' => $urls]);
     }
 
@@ -41,27 +60,44 @@ class Engine extends Controller
         return view('url', ['url' => $url, 'dataOfCheck' => $dataOfCheck, 'id' => $id]);
     }
 
+    //Метод проверки страницы
+    /**
+     * @throws RequestException
+     */
     public function checkUrl(Request $request): \Illuminate\Http\RedirectResponse
     {
         $url_id = $request->input('id');
+        $url = (array) DB::table('urls')->where('id', $url_id)->first();
+
+        //Проверяем на ошибку подключения
+        try {
+            $response = Http::get($url['name']);
+        } catch (\Exception $e) {
+            Session::flash('flash_mess_check_error', 'Ошибка: ' . $e->getMessage());
+            return redirect()->route('showUrl', ['id' => $url_id]);
+        }
+
+        //Подключение успешно - собираем инфу по тегам и пишем данные по проверке подключения
+        $tags = $this->getTags($response->body(), $url['name']);
         DB::table('url_checks')->insert(
             [
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
                 'url_id' => $url_id,
-                'status_code' => 200,
-                'h1' => 'bla',
-                'keywords' => 'bla-bla',
-                'description' => 'bla-bla-bla'
+                'status_code' => $response->status(),
+                'h1' => $tags['h1'],
+                'keywords' => $tags['keywords'],
+                'description' => $tags['description']
             ]
         );
         DB::table('urls')
             ->where('id', $url_id)
             ->update(['updated_at' => Carbon::now()]);
-        Session::flash('flash_mess_check_success', 'Проверка выполнена');
+        Session::flash('flash_mess_check_success', 'Страница успешно проверена');
         return redirect()->route('showUrl', ['id' => $url_id]);
     }
 
+    //Вспомогательные методы**********************************************************
     public function validateAndFilterUrl(string $url): string | bool
     {
         $scheme = (string) parse_url($url, PHP_URL_SCHEME);
@@ -71,5 +107,17 @@ class Engine extends Controller
         }
         return false;
     }
+    public function getTags(string $body, string $url): array
+    {
+        $h1Search = preg_match('/(?<=h1>).+(?=<\/h1>)/', $body, $h1);
+        $tags['h1'] = ($h1Search > 0) ? $h1[0] : '';
+        $metaTagsSearch = get_meta_tags($url) ?: [];
+        $tags['keywords'] = array_key_exists('keywords', $metaTagsSearch)
+            ? $metaTagsSearch['keywords']
+            : '';
+        $tags['description'] = array_key_exists('description', $metaTagsSearch)
+            ? $metaTagsSearch['description']
+            : '';
+        return $tags;
+    }
 }
-

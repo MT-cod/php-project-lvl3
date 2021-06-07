@@ -32,7 +32,7 @@
         </div>
 
         <div class="container-lg">
-            <h1 class="mt-5 mb-3">Страница: {{ $url->name }}</h1>
+            <h1 class="mt-5 mb-3">Страница: {{ Str::limit($url->name, 50, '...') }}</h1>
             <div class="table-responsive">
                 <table  style="table-layout: auto; width: auto;">
                     <tbody><tr style="background-color: #9acfd4;">
@@ -43,7 +43,7 @@
                     </tr>
                         <tr style="background-color: #bddfe2;">
                         <th>{{ $url->id }}</th>
-                        <th>{{ $url->name }}</th>
+                        <th>{{ Str::limit($url->name, 50, '...') }}</th>
                         <th>{{ $url->created_at }}</th>
                         <th>{{ $url->updated_at }}</th>
                         </tr>
@@ -70,9 +70,9 @@
                 <tr style="background-color: #c2f3d7;">
                     <th>{{ $row->id }}</th>
                     <th>{{ $row->status_code }}</th>
-                    <th>{{ $row->h1 }}</th>
-                    <th>{{ $row->keywords }}</th>
-                    <th>{{ $row->description }}</th>
+                    <th>{{ Str::limit($row->h1, 20, '...') }}</th>
+                    <th>{{ Str::limit($row->keywords, 30, '...') }}</th>
+                    <th>{{ Str::limit($row->description, 50, '...') }}</th>
                     <th>{{ $row->created_at }}</th>
                 </tr>
             @endforeach

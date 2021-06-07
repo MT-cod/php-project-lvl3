@@ -13,6 +13,10 @@
             body {
                 font-family: 'Nunito', sans-serif;
             }
+            .pagination li{
+                list-style-type: none;
+                float: left;
+            }
         </style>
     </head>
     <body style="text-align: center; background-color: #dbe8f3;">
@@ -21,30 +25,26 @@
         <a class="nav-link" href="/">[Анализатор страниц]</a>
         <a class="nav-link" href="/urls">[Все добавленные страницы]</a>
         </div>
+        <h1 class="mt-5 mb-3">Страницы</h1>
+        <table style="table-layout: auto; width: auto;">
+            <tbody><tr style="background-color: #9acfd4;">
+                <th>ID</th>
+                <th>Имя</th>
+                <th>Последняя проверка</th>
+                <th>Код ответа</th>
+            </tr>
+            @foreach ($urls as $url)
+                <tr style="background-color: #bddfe2;">
+                    <th>{{ $url->id }}</th>
+                    <th><a href="/urls/{{ $url->id }}">{{ Str::limit($url->name, 50, '...') }}</a></th>
+                    <th>{{ $url->updated_at }}</th>
+                    <th>{{ $url->status_code }}</th>
+                </tr>
+            @endforeach
+            </tbody>
+            <tr><th>{!! $urls->links('pagination::bootstrap-4') !!}</th></tr>
+        </table>
 
-        <div class="container-lg">
-            <h1 class="mt-5 mb-3">Страницы</h1>
-            <div class="table-responsive">
-                <table style="table-layout: auto; width: auto;">
-                    <tbody><tr style="background-color: #9acfd4;">
-                        <th>ID</th>
-                        <th>Имя</th>
-                        <th>Последняя проверка</th>
-                        <th>Код ответа</th>
-                    </tr>
-                        @foreach ($urls as $url)
-                            <tr style="background-color: #bddfe2;">
-                            <th>{{ $url->id }}</th>
-                            <th><a href="/urls/{{ $url->id }}">{{ $url->name }}</a></th>
-                            <th>{{ $url->updated_at }}</th>
-                            <th>666</th>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-                <div>{{ $urls->links() }}</div>
-            </div>
-        </div>
     </center>
     </body>
 </html>

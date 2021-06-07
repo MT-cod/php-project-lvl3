@@ -6,6 +6,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Http;
 use Tests\TestCase;
 
 class Test extends TestCase
@@ -23,11 +24,15 @@ class Test extends TestCase
     {
         $response = $this->get(route('home'));
         $response->assertOk();
+        $response->assertSeeTextInOrder(
+            ['Анализатор страниц', 'Все добавленные страницы', 'Проверить'],
+            true
+        );
     }
     public function testAddUrl(): void
     {
-        $response = $this->post(route('addUrl'), ['url' => ['name' => 'http://kaka.com']]);
-        $this->assertDatabaseHas('urls', ['name' => 'http://kaka.com']);
+        $response = $this->post(route('addUrl'), ['url' => ['name' => 'http://test.test']]);
+        $this->assertDatabaseHas('urls', ['name' => 'http://test.test']);
         $response->assertStatus(302);
 
         //$response->dumpHeaders();
@@ -36,23 +41,24 @@ class Test extends TestCase
     }
     public function testShowUrls(): void
     {
-        $this->post(route('addUrl'), ['url' => ['name' => 'http://kaka.com']]);
+        $this->post(route('addUrl'), ['url' => ['name' => 'http://test.test']]);
         $response = $this->get(route('showUrls'));
         $response->assertOk();
-        $response->assertSee('http://kaka.com', $escaped = true);
+        $response->assertSee('http://test.test',true);
     }
     public function testShowUrl(): void
     {
-        $this->post(route('addUrl'), ['url' => ['name' => 'http://kaka.com']]);
+        $this->post(route('addUrl'), ['url' => ['name' => 'http://test.test']]);
         $response = $this->get(route('showUrl', ['id' => 1]));
         $response->assertOk();
-        $response->assertSee('http://kaka.com', $escaped = true);
+        $response->assertSee('http://test.test', true);
     }
     public function testCheckUrl(): void
     {
-        $this->post(route('addUrl'), ['url' => ['name' => 'http://kaka.com']]);
+        Http::fake(['*' => Http::response('Hello World', 222, ['Headers'])]);
+        $this->post(route('addUrl'), ['url' => ['name' => 'http://example.com']]);
         $this->post('/urls/{id}/checks', ['id' => 1]);
-        $this->assertDatabaseHas('url_checks', ['id' => 1, 'url_id' => 1]);
+        $this->assertDatabaseHas('url_checks', ['id' => 1, 'url_id' => 1, 'status_code' => 222]);
     }
 
     protected function tearDown(): void
