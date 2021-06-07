@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Http;
 use Tests\TestCase;
 
-class Test extends TestCase
+class EngineTest extends TestCase
 {
     use RefreshDatabase;
 
