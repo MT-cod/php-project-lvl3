@@ -33,4 +33,12 @@
         <server name="DB_DATABASE" value="tests/database.sqlite"/>
         <server name="DB_FOREIGN_KEYS" value="true"/>
     </php>
+    <coverage includeUncoveredFiles="true">
+        <include>
+            <directory suffix=".php">tests/Feature</directory>
+            <file>routes/web.php</file>
+            <file>app/Http/Controllers/Engine.php</file>
+        </include>
+    </coverage>
+
 </phpunit>
