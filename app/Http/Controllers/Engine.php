@@ -78,7 +78,8 @@ class Engine extends Controller
         }
 
         //Подключение успешно - собираем инфу по тегам и пишем данные по проверке подключения
-        $tags = $this->getTags($response->body(), $url['name']);
+        $tags = $this->getTags($response, $url['name']);
+
         DB::table('url_checks')->insert(
             [
                 'created_at' => Carbon::now(),
@@ -97,7 +98,7 @@ class Engine extends Controller
         return redirect()->route('showUrl', ['id' => $url_id]);
     }
 
-    //Вспомогательные методы**********************************************************
+    //Вспомогательные методы////////////////////////////////////////////////////////
     public function validateAndFilterUrl(string $url): string | bool
     {
         $scheme = (string) parse_url($url, PHP_URL_SCHEME);
@@ -107,17 +108,20 @@ class Engine extends Controller
         }
         return false;
     }
-    public function getTags(string $body, string $url): array
+    public function getTags($response, string $url): array
     {
-        $h1Search = preg_match('/(?<=h1>).+(?=<\/h1>)/', $body, $h1);
-        $tags['h1'] = ($h1Search > 0) ? $h1[0] : '';
-        $metaTagsSearch = get_meta_tags($url) ?: [];
-        $tags['keywords'] = array_key_exists('keywords', $metaTagsSearch)
+        if ($response->successful()) {
+            $h1Search = preg_match('/(?<=h1>).+(?=<\/h1>)/', $response->body(), $h1);
+            $tags['h1'] = ($h1Search > 0) ? $h1[0] : '';
+            $metaTagsSearch = get_meta_tags($url) ?: [];
+            $tags['keywords'] = array_key_exists('keywords', $metaTagsSearch)
             ? $metaTagsSearch['keywords']
             : '';
-        $tags['description'] = array_key_exists('description', $metaTagsSearch)
+            $tags['description'] = array_key_exists('description', $metaTagsSearch)
             ? $metaTagsSearch['description']
             : '';
-        return $tags;
+            return $tags;
+        }
+        return ['h1' => '', 'keywords' => '', 'description' => ''];
     }
 }
