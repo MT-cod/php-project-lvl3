@@ -3,23 +3,25 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-
         <title>Mt-cod / Page analizer</title>
-
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
 
         <style>
             body {
                 font-family: 'Nunito', sans-serif;
+                text-align: center;
+                background-color: #dbe8f3;
             }
         </style>
     </head>
-    <body  style="text-align: center; background-color: #dbe8f3;">
+    <body>
     <center>
 
         @if(Session::has('flash_mess_check_success'))
             <div style="background-color: #7fe2b4">{!! session('flash_mess_check_success') !!}</div>
+        @elseif(Session::has('flash_mess_duplicate_url'))
+            <div style="background-color: #70ade7">{!! session('flash_mess_duplicate_url') !!}</div>
         @elseif(Session::has('flash_mess_check_error'))
             <div style="background-color: #ff885a">{!! session('flash_mess_check_error') !!}</div>
         @else
@@ -51,7 +53,9 @@
                 </table>
             </div>
         </div>
-<br>
+
+        <br>
+
         <form action="/urls/{id}/checks" method="post">
             <input type="hidden" value="{{ $id }}" name="id"/>
             <button type="submit">Проверить</button>
@@ -78,7 +82,6 @@
             @endforeach
             </tbody>
         </table>
-
     </center>
     </body>
 </html>
