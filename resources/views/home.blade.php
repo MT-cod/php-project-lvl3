@@ -3,19 +3,19 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-
         <title>Mt-cod / Page analizer</title>
-
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
 
         <style>
             body {
                 font-family: 'Nunito', sans-serif;
+                text-align: center;
+                background-color: #dbe8f3;
             }
         </style>
     </head>
-    <body style="text-align: center; background-color: #dbe8f3;">
+    <body>
         @if(Session::has('flash_mess_add_error'))
             <div style="background-color: #ff885a">{!! session('flash_mess_add_error') !!}</div>
         @else
