@@ -20,6 +20,8 @@
 
         @if(Session::has('flash_mess_check_success'))
             <div style="background-color: #7fe2b4">{!! session('flash_mess_check_success') !!}</div>
+        @elseif(Session::has('flash_mess_add_success'))
+            <div style="background-color: #7fe2b4">{!! session('flash_mess_add_success') !!}</div>
         @elseif(Session::has('flash_mess_duplicate_url'))
             <div style="background-color: #70ade7">{!! session('flash_mess_duplicate_url') !!}</div>
         @elseif(Session::has('flash_mess_check_error'))
