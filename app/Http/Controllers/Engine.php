@@ -17,25 +17,23 @@ class Engine extends Controller
     public function addUrl(Request $request): \Illuminate\Http\RedirectResponse
     {
         $url = $this->validateAndFilterUrl($request->input('url.name'));
+        //Если переданное имя сайта неправльное, то выбрасываем ошибку
         if ($url === false) {
             Session::flash('flash_mess_add_error', 'Некорректный URL: ' . $request->input('url.name'));
             return redirect()->route('home');
         }
-        if (DB::table('urls')->where('name',  '=', $url)->exists()) {
+        //Проверяем на наличие переданного имени сайта в базе
+        if (DB::table('urls')->where('name', '=', $url)->exists()) {
             $id = DB::table('urls')->where('name', $url)->value('id');
             Session::flash('flash_mess_duplicate_url', 'Страница уже существует');
             return redirect()->route('showUrl', ['id' => $id]);
         }
-
-            DB::table('urls')->upsert(
-                [['name' => $url, 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()]],
-                ['name'],
-                ['updated_at']
-            );
-            Session::flash('flash_mess_add_success', 'Страница успешно добавлена');
-
-
-
+        //Переданное имя сайта правильное и новое для базы, добавляем в базу
+        DB::table('urls')
+            ->insert(['name' => $url, 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()]);
+        Session::flash('flash_mess_add_success', 'Страница успешно добавлена');
+        $id = DB::table('urls')->where('name', $url)->value('id');
+        return redirect()->route('showUrl', ['id' => $id]);
     }
 
     public function showUrls(): \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory

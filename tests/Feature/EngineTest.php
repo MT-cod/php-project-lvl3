@@ -33,7 +33,7 @@ class EngineTest extends TestCase
     {
         $response = $this->post(route('addUrl'), ['url' => ['name' => 'http://test.test']]);
         $this->assertDatabaseHas('urls', ['name' => 'http://test.test']);
-        $response->assertStatus(500);
+        $response->assertStatus(302);
     }
     public function testShowUrls(): void
     {
