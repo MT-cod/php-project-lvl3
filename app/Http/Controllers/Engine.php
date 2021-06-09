@@ -28,7 +28,7 @@ class Engine extends Controller
             Session::flash('flash_mess_duplicate_url', 'Страница уже существует');
             return redirect()->route('showUrl', ['id' => $id]);
         }
-        // Переданное имя сайта правильное и новое для базы, добавляем в базу
+        //Переданное имя сайта правильное и новое для базы, добавляем в базу
         DB::table('urls')
             ->insert(['name' => $url, 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()]);
         Session::flash('flash_mess_add_success', 'Страница успешно добавлена');
@@ -118,16 +118,16 @@ class Engine extends Controller
     {
         if ($response->successful()) {
             $h1Search = preg_match('/(?<=h1>).+(?=<\/h1>)/', $response->body(), $h1);
-            $tags['h1'] = ($h1Search > 0) ? $h1[0] : '';
+            $tags['h1'] = ($h1Search > 0) ? $h1[0] : ' ';
             $metaTagsSearch = get_meta_tags($url) ?: [];
             $tags['keywords'] = array_key_exists('keywords', $metaTagsSearch)
             ? $metaTagsSearch['keywords']
-            : '';
+            : ' ';
             $tags['description'] = array_key_exists('description', $metaTagsSearch)
             ? $metaTagsSearch['description']
-            : '';
+            : ' ';
             return $tags;
         }
-        return ['h1' => '', 'keywords' => '', 'description' => ''];
+        return ['h1' => ' ', 'keywords' => ' ', 'description' => ' '];
     }
 }
