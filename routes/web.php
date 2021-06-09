@@ -19,7 +19,7 @@ Route::get('/', function () {
     return view('home');
 })->name('home');
 
-Route::get('urls', [Engine::class, 'showUrls'])->name('showUrls');
+Route::get('urls', [Engine::class, 'showUrls'])->name('urls.store');
 
 Route::get('/urls/{id}', [Engine::class, 'showUrl'])->name('showUrl');
 

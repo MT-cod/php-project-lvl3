@@ -38,7 +38,7 @@ class EngineTest extends TestCase
     public function testShowUrls(): void
     {
         $this->post(route('addUrl'), ['url' => ['name' => 'http://test.test']]);
-        $response = $this->get(route('showUrls'));
+        $response = $this->get(route('urls.store'));
         $response->assertOk();
         $response->assertSee('http://test.test', true);
     }
