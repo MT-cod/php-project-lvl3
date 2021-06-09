@@ -105,7 +105,7 @@ class Engine extends Controller
     }
 
     //Вспомогательные методы////////////////////////////////////////////////////////
-    public function validateAndFilterUrl(string $url): string | bool
+    public function validateAndFilterUrl(mixed $url): string | bool
     {
         $scheme = (string) parse_url($url, PHP_URL_SCHEME);
         $host = (string) parse_url($url, PHP_URL_HOST);
