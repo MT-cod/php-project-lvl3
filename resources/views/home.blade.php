@@ -25,7 +25,7 @@
         <a class="nav-link" href="/">[Анализатор страниц]</a>
         <a class="nav-link" href="/urls">[Все добавленные страницы]</a>
         <form action="/" method="post">
-            <input type="text" name="url[name]" value="" class="form-control form-control-lg" placeholder="https://www.example.com">
+            <input type="text" maxlength=255 name="url[name]" value="" class="form-control form-control-lg" placeholder="https://www.example.com">
             <button type="submit">Проверить</button>
         </form>
     </body>
