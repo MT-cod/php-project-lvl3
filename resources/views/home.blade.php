@@ -16,8 +16,8 @@
         </style>
     </head>
     <body>
-        @if(Session::has('errors'))
-            <div style="background-color: #ff885a">{!! session('errors') !!}</div>
+        @if(Session::has('errorss'))
+            <div style="background-color: #ff885a">{!! session('errorss') !!}</div>
         @else
             <br>
         @endif

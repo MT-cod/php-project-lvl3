@@ -19,7 +19,7 @@ class Engine extends Controller
         $url = $this->validateAndFilterUrl($request->input('url.name'));
         //Если переданное имя сайта неправльное, то выбрасываем ошибку
         if ($url === false) {
-            Session::flash('errors', 'Некорректный URL: ' . $request->input('url.name'));
+            Session::flash('errorss', 'Некорректный URL: ' . $request->input('url.name'));
             return redirect()->route('home');
         }
         //Проверяем на наличие переданного имени сайта в базе
