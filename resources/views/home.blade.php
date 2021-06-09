@@ -16,8 +16,8 @@
         </style>
     </head>
     <body>
-        @if(Session::has('flash_mess_add_error'))
-            <div style="background-color: #ff885a">{!! session('flash_mess_add_error') !!}</div>
+        @if(Session::has('errors'))
+            <div style="background-color: #ff885a">{!! session('errors') !!}</div>
         @else
             <br>
         @endif
