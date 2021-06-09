@@ -27,8 +27,3 @@ Route::get('/urls/{id}', [Engine::class, 'showUrl'])->name('showUrl');
 Route::post('/', [Engine::class, 'addUrl'])->name('addUrl');
 
 Route::post('/urls/{id}/checks', [Engine::class, 'checkUrl'])->name('checkUrl');
-
-/*Route::get($uri, $callback);
-Route::post($uri, $callback);
-Route::put($uri, $callback);
-Route::patch($uri, $callback);*/
