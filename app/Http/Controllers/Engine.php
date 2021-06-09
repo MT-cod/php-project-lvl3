@@ -28,7 +28,7 @@ class Engine extends Controller
             Session::flash('flash_mess_duplicate_url', 'Страница уже существует');
             return redirect()->route('showUrl', ['id' => $id]);
         }
-        //Переданное имя сайта правильное и новое для базы, добавляем в базу
+        // Переданное имя сайта правильное и новое для базы, добавляем в базу
         DB::table('urls')
             ->insert(['name' => $url, 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()]);
         Session::flash('flash_mess_add_success', 'Страница успешно добавлена');
