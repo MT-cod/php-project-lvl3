@@ -23,9 +23,11 @@ log:
 	tail -f storage/logs/laravel.log
 
 test:
+	touch tests/database.sqlite
 	php artisan test
 
 test-coverage:
+	touch tests/database.sqlite
 	composer exec --verbose phpunit tests -- --coverage-clover clover.xml --verbose
 
 deploy:
