@@ -20,7 +20,7 @@ class Engine extends Controller
         //Если переданное имя сайта неправльное, то выбрасываем ошибку
         if ($url === false) {
             //Session::flash('errors', 'Некорректный URL: ' . $request->input('url.name'));
-            $request->session()->put('errors', 'Некорректный URL: ' . $request->input('url.name'));
+            $request->session()->put('errors', 'Некорректный URL');
             return redirect()->route('home');
         }
         //Проверяем на наличие переданного имени сайта в базе
@@ -80,7 +80,7 @@ class Engine extends Controller
         try {
             $response = Http::get($url['name']);
         } catch (\Exception $e) {
-            $request->session()->put('errors', 'Ошибка: ' . $e->getMessage());
+            $request->session()->put('errors', $e->getMessage());
             return redirect()->route('showUrl', ['id' => $url_id]);
         }
 
