@@ -18,14 +18,10 @@
     <body>
     <center>
 
-        @if(Session::has('flash_mess_check_success'))
-            <div style="background-color: #7fe2b4">{!! session('flash_mess_check_success') !!}</div>
-        @elseif(Session::has('flash_mess_add_success'))
-            <div style="background-color: #7fe2b4">{!! session('flash_mess_add_success') !!}</div>
-        @elseif(Session::has('flash_mess_duplicate_url'))
-            <div style="background-color: #70ade7">{!! session('flash_mess_duplicate_url') !!}</div>
-        @elseif(Session::has('flash_mess_check_error'))
-            <div style="background-color: #ff885a">{!! session('flash_mess_check_error') !!}</div>
+        @if(Session::has('success'))
+            <div style="background-color: #7fe2b4">{{ session()->pull('success') }}</div>
+        @elseif(Session::has('errors'))
+            <div style="background-color: #ff885a">{{ session()->pull('errors') }}</div>
         @else
             <br>
         @endif

@@ -17,7 +17,7 @@
     </head>
     <body>
         @if(Session::has('errors'))
-            <div style="background-color: #ff885a">{!! session('errors') !!}</div>
+            <div style="background-color: #ff885a">{{ session()->pull('errors') }}</div>
         @else
             <br>
         @endif

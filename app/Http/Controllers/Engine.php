@@ -19,20 +19,20 @@ class Engine extends Controller
         $url = $this->validateAndFilterUrl($request->input('url.name'));
         //Если переданное имя сайта неправльное, то выбрасываем ошибку
         if ($url === false) {
-            //Session::flash('errorss', 'Некорректный URL: ' . $request->input('url.name'));
-            session(['errors' => 'Некорректный URL: ' . $request->input('url.name')]);
+            //Session::flash('errors', 'Некорректный URL: ' . $request->input('url.name'));
+            $request->session()->put('errors', 'Некорректный URL: ' . $request->input('url.name'));
             return redirect()->route('home');
         }
         //Проверяем на наличие переданного имени сайта в базе
         if (DB::table('urls')->where('name', '=', $url)->exists()) {
             $id = DB::table('urls')->where('name', $url)->value('id');
-            Session::flash('flash_mess_duplicate_url', 'Страница уже существует');
+            $request->session()->put('success', 'Страница уже существует');
             return redirect()->route('showUrl', ['id' => $id]);
         }
         //Переданное имя сайта правильное и новое для базы, добавляем в базу
         DB::table('urls')
             ->insert(['name' => $url, 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()]);
-        Session::flash('flash_mess_add_success', 'Страница успешно добавлена');
+        $request->session()->put('success', 'Страница успешно добавлена');
         $id = DB::table('urls')->where('name', $url)->value('id');
         return redirect()->route('showUrl', ['id' => $id]);
     }
@@ -80,7 +80,7 @@ class Engine extends Controller
         try {
             $response = Http::get($url['name']);
         } catch (\Exception $e) {
-            Session::flash('flash_mess_check_error', 'Ошибка: ' . $e->getMessage());
+            $request->session()->put('errors', 'Ошибка: ' . $e->getMessage());
             return redirect()->route('showUrl', ['id' => $url_id]);
         }
 
@@ -101,7 +101,7 @@ class Engine extends Controller
         DB::table('urls')
             ->where('id', $url_id)
             ->update(['updated_at' => Carbon::now()]);
-        Session::flash('flash_mess_check_success', 'Страница успешно проверена');
+        $request->session()->put('success', 'Страница успешно проверена');
         return redirect()->route('showUrl', ['id' => $url_id]);
     }
 
