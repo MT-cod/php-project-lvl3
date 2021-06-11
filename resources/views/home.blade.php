@@ -16,16 +16,15 @@
         </style>
     </head>
     <body>
-        @if(Session::has('errors'))
-            <div style="background-color: #ff885a">{{ session()->pull('errors') }}</div>
-        @else
-            <br>
-        @endif
+
+    @error('url.name')
+    <div style="background-color: #ff885a">{{ $message }}</div>
+    @enderror
 
         <a class="nav-link" href="/">[Анализатор страниц]</a>
         <a class="nav-link" href="/urls">[Все добавленные страницы]</a>
         <form action="/urls" method="post">
-            <input type="text" maxlength=255 name="url[name]" value="" class="form-control form-control-lg" placeholder="https://www.example.com">
+            <input id="url.name" type="text" name="url[name]" value="{{ old('url.name') }}" class="@error('url.name') is-invalid @enderror" placeholder="https://www.example.com">
             <button type="submit">Проверить</button>
         </form>
     </body>

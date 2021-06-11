@@ -3,20 +3,23 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Http\Client\RequestException;
 use Illuminate\Http\Request;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Client\Response;
 use Illuminate\Pagination\LengthAwarePaginator;
-use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Session;
 use Carbon\Carbon;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\View;
+use Illuminate\Contracts\View\Factory;
+use App\Http\Requests\UrlValidator;
 
 class Engine extends Controller
 {
-    public function addUrl(Request $request): \Illuminate\Http\RedirectResponse
+    public function addUrl(UrlValidator $request): RedirectResponse
     {
-        $url = $this->validateAndFilterUrl($request->input('url.name'));
+        $url = $this->filterUrl($request->input('url.name'));
         //Если переданное имя сайта неправльное, то выбрасываем ошибку
         if ($url === false) {
             //Session::flash('errors', 'Некорректный URL: ' . $request->input('url.name'));
@@ -37,7 +40,7 @@ class Engine extends Controller
         return redirect()->route('showUrl', ['id' => $id]);
     }
 
-    public function showUrls(): \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
+    public function showUrls(): Application|View|Factory
     {
         $querry = DB::select('
         select id, name, updated_at, sel2.status as status_code from urls LEFT JOIN
@@ -57,7 +60,7 @@ class Engine extends Controller
         return view('urls', ['urls' => $urls]);
     }
 
-    public function showUrl(int $id): \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
+    public function showUrl(int $id): Application|View|Factory
     {
         $url = DB::table('urls')->where('id', $id)->first();
         $dataOfCheck = DB::table('url_checks')
@@ -68,10 +71,7 @@ class Engine extends Controller
     }
 
     //Метод проверки страницы
-    /**
-     * @throws RequestException
-     */
-    public function checkUrl(Request $request): \Illuminate\Http\RedirectResponse
+    public function checkUrl(Request $request): RedirectResponse
     {
         $url_id = $request->input('id');
         $url = (array) DB::table('urls')->where('id', $url_id)->first();
@@ -106,7 +106,7 @@ class Engine extends Controller
     }
 
     //Вспомогательные методы////////////////////////////////////////////////////////
-    public function validateAndFilterUrl(mixed $url): string | bool
+    public function filterUrl(mixed $url): string | bool
     {
         $scheme = (string) parse_url($url, PHP_URL_SCHEME);
         $host = (string) parse_url($url, PHP_URL_HOST);
@@ -115,7 +115,7 @@ class Engine extends Controller
         }
         return false;
     }
-    public function getTags($response, string $url): array
+    public function getTags(Response $response, string $url): array
     {
         if ($response->successful()) {
             $h1Search = preg_match('/(?<=h1>).+(?=<\/h1>)/', $response->body(), $h1);

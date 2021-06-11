@@ -31,23 +31,23 @@ class EngineTest extends TestCase
     }
     public function testAddUrl(): void
     {
-        $response = $this->post(route('addUrl'), ['url' => ['name' => 'http://test.test']]);
-        $this->assertDatabaseHas('urls', ['name' => 'http://test.test']);
+        $response = $this->post(route('addUrl'), ['url' => ['name' => 'http://example.com']]);
+        $this->assertDatabaseHas('urls', ['name' => 'http://example.com']);
         $response->assertStatus(302);
     }
     public function testShowUrls(): void
     {
-        $this->post(route('addUrl'), ['url' => ['name' => 'http://test.test']]);
+        $this->post(route('addUrl'), ['url' => ['name' => 'http://example.com']]);
         $response = $this->get(route('urls.store'));
         $response->assertOk();
-        $response->assertSee('http://test.test', true);
+        $response->assertSee('http://example.com', true);
     }
     public function testShowUrl(): void
     {
-        $this->post(route('addUrl'), ['url' => ['name' => 'http://test.test']]);
+        $this->post(route('addUrl'), ['url' => ['name' => 'http://example.com']]);
         $response = $this->get(route('showUrl', ['id' => 1]));
         $response->assertOk();
-        $response->assertSee('http://test.test', true);
+        $response->assertSee('http://example.com', true);
     }
     public function testCheckUrl(): void
     {
