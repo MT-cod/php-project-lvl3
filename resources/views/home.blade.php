@@ -30,7 +30,7 @@
         <a class="nav-link" href="/">[Анализатор страниц]</a>
         <a class="nav-link" href="/urls">[Все добавленные страницы]</a>
         <form action="/urls" method="post">
-            <input id="url.name" type="text" name="url[name]" value="{{ old('url.name') }}" class="@error('url.name') is-invalid @enderror" placeholder="https://www.example.com">
+            <input id="url[name]" type="text" name="url[name]" value="{{ old('url.name') }}" class="@error('url.name') is-invalid @enderror" placeholder="https://www.example.com">
             <button type="submit">Проверить</button>
         </form>
     </body>
