@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use App\Rules\Urlname;
 
 class UrlValidator extends FormRequest
 {
@@ -10,18 +11,12 @@ class UrlValidator extends FormRequest
     {
         return [
             'required' => 'Некорректный URL',
-            'max' => ['string' => 'Некорректный URL'],
-            'active_url' => 'Некорректный URL'
+            'max' => ['string' => 'Некорректный URL']
         ];
     }
 
-    /*public function authorize(): bool
-    {
-        return true;
-    }*/
-
     public function rules(): array
     {
-        return ['url.name' => 'bail|required|max:255|active_url'];
+        return ['url.name' => ['bail', 'required', 'max:255', new Urlname()]];
     }
 }

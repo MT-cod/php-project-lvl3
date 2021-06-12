@@ -14,6 +14,7 @@ use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\View;
 use Illuminate\Contracts\View\Factory;
 use App\Http\Requests\UrlValidator;
+use Illuminate\Support\Facades\Session;
 
 class Engine extends Controller
 {
@@ -21,11 +22,11 @@ class Engine extends Controller
     {
         $url = $this->filterUrl($request->input('url.name'));
         //Если переданное имя сайта неправльное, то выбрасываем ошибку
-        if ($url === false) {
-            //Session::flash('errors', 'Некорректный URL: ' . $request->input('url.name'));
-            $request->session()->put('errors', 'Некорректный URL');
+        /*if ($url === false) {
+            Session::flash('errors', 'Некорректный URL');
             return redirect()->route('home');
-        }
+        }*/
+        //$url = $request->validated();
         //Проверяем на наличие переданного имени сайта в базе
         if (DB::table('urls')->where('name', '=', $url)->exists()) {
             $id = DB::table('urls')->where('name', $url)->value('id');
@@ -106,14 +107,11 @@ class Engine extends Controller
     }
 
     //Вспомогательные методы////////////////////////////////////////////////////////
-    public function filterUrl(mixed $url): string | bool
+    public function filterUrl(mixed $url): string
     {
         $scheme = (string) parse_url($url, PHP_URL_SCHEME);
         $host = (string) parse_url($url, PHP_URL_HOST);
-        if (($scheme == 'http' || $scheme == 'https') && !empty($host)) {
-            return $scheme . '://' . $host;
-        }
-        return false;
+        return $scheme . '://' . $host;
     }
     public function getTags(Response $response, string $url): array
     {
