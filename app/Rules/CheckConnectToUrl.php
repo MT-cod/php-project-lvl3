@@ -21,7 +21,7 @@ class CheckConnectToUrl implements Rule
         try {
             Http::get($url['name']);
         } catch (\Exception $e) {
-            $this->curlError = $e->getMessage() . ' for ' . $url['name'];
+            $this->curlError = $e->getMessage();
             return false;
         }
         return true;
