@@ -17,9 +17,15 @@
     </head>
     <body>
 
-    @error('url.name')
-    <div style="background-color: #ff885a">{{ $message }}</div>
-    @enderror
+    @if ($errors->any())
+        <div style="background-color: #ff885a">
+            @foreach ($errors->all() as $error)
+                {{ $error }}
+            @endforeach
+        </div>
+    @else
+        <br>
+    @endif
 
         <a class="nav-link" href="/">[Анализатор страниц]</a>
         <a class="nav-link" href="/urls">[Все добавленные страницы]</a>

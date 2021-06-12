@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CheckUrlValidator;
+use App\Rules\CheckConnectToUrl;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
@@ -15,28 +17,25 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Contracts\View\Factory;
 use App\Http\Requests\UrlValidator;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Validator;
 
 class Engine extends Controller
 {
     public function addUrl(UrlValidator $request): RedirectResponse
     {
+        //Если url был добавлен с параметрами после имени домена, то избавляемся от них
         $url = $this->filterUrl($request->input('url.name'));
-        //Если переданное имя сайта неправльное, то выбрасываем ошибку
-        /*if ($url === false) {
-            Session::flash('errors', 'Некорректный URL');
-            return redirect()->route('home');
-        }*/
-        //$url = $request->validated();
+
         //Проверяем на наличие переданного имени сайта в базе
         if (DB::table('urls')->where('name', '=', $url)->exists()) {
             $id = DB::table('urls')->where('name', $url)->value('id');
-            $request->session()->put('success', 'Страница уже существует');
+            Session::flash('message', 'Страница уже существует');
             return redirect()->route('showUrl', ['id' => $id]);
         }
-        //Переданное имя сайта правильное и новое для базы, добавляем в базу
+        //Переданный url новый для базы, добавляем в базу
         DB::table('urls')
             ->insert(['name' => $url, 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()]);
-        $request->session()->put('success', 'Страница успешно добавлена');
+        Session::flash('message', 'Страница успешно добавлена');
         $id = DB::table('urls')->where('name', $url)->value('id');
         return redirect()->route('showUrl', ['id' => $id]);
     }
@@ -71,21 +70,18 @@ class Engine extends Controller
         return view('url', ['url' => $url, 'dataOfCheck' => $dataOfCheck, 'id' => $id]);
     }
 
-    //Метод проверки страницы
-    public function checkUrl(Request $request): RedirectResponse
+    public function checkUrl(CheckUrlValidator $request): RedirectResponse
     {
         $url_id = $request->input('id');
         $url = (array) DB::table('urls')->where('id', $url_id)->first();
 
-        //Проверяем на ошибку подключения
+        //Повторно проверяем подключение и собираем инфу по тегам и пишем данные по проверке подключения
         try {
             $response = Http::get($url['name']);
         } catch (\Exception $e) {
-            $request->session()->put('errors', $e->getMessage());
+            Session::flash('errors', $e->getMessage() . ' for ' . $url['name']);
             return redirect()->route('showUrl', ['id' => $url_id]);
         }
-
-        //Подключение успешно - собираем инфу по тегам и пишем данные по проверке подключения
         $tags = $this->getTags($response, $url['name']);
 
         DB::table('url_checks')->insert(
@@ -102,7 +98,7 @@ class Engine extends Controller
         DB::table('urls')
             ->where('id', $url_id)
             ->update(['updated_at' => Carbon::now()]);
-        $request->session()->put('success', 'Страница успешно проверена');
+        Session::flash('message', 'Страница успешно проверена');
         return redirect()->route('showUrl', ['id' => $url_id]);
     }
 

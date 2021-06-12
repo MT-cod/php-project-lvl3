@@ -3,9 +3,9 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use App\Rules\Urlname;
+use App\Rules\CheckConnectToUrl;
 
-class UrlValidator extends FormRequest
+class CheckUrlValidator extends FormRequest
 {
     /**
      * @return array
@@ -13,8 +13,7 @@ class UrlValidator extends FormRequest
     public function messages()
     {
         return [
-            'required' => 'Некорректный URL',
-            'max' => ['string' => 'Некорректный URL']
+            'required' => 'Некорректный URL'
         ];
     }
 
@@ -23,6 +22,6 @@ class UrlValidator extends FormRequest
      */
     public function rules()
     {
-        return ['url.name' => ['bail', 'required', 'max:255', new Urlname()]];
+        return ['id' => ['bail', 'required', new CheckConnectToUrl()]];
     }
 }
