@@ -19,9 +19,11 @@
 
     @if ($errors->any())
         <div style="background-color: #ff885a">
-            @foreach ($errors->all() as $error)
-                {{ $error }}
-            @endforeach
+            <div class="alert alert-success" role="alert">
+                @foreach ($errors->all() as $error)
+                    {{ $error }}
+                @endforeach
+            </div>
         </div>
     @else
         <br>
