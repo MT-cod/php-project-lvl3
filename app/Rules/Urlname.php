@@ -26,6 +26,6 @@ class Urlname implements Rule
      */
     public function message()
     {
-        return 'Кривой url';
+        return 'Некорректный URL';
     }
 }
