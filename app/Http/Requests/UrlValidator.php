@@ -13,7 +13,7 @@ class UrlValidator extends FormRequest
     public function messages()
     {
         return [
-            'required' => 'Некорректный URL',
+            'required' => 'Некорректный bla-bla URL',
             'max' => ['string' => 'Некорректный URL']
         ];
     }
