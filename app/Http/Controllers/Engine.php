@@ -21,7 +21,7 @@ use Illuminate\Support\Facades\Validator;
 
 class Engine extends Controller
 {
-    public function addUrl(UrlValidator $request): RedirectResponse
+    public function create(UrlValidator $request): RedirectResponse
     {
         //Если url был добавлен с параметрами после имени домена, то избавляемся от них
         $url = $this->filterUrl($request->input('url.name'));
@@ -30,17 +30,17 @@ class Engine extends Controller
         if (DB::table('urls')->where('name', '=', $url)->exists()) {
             $id = DB::table('urls')->where('name', $url)->value('id');
             Session::flash('message', 'Страница уже существует');
-            return redirect()->route('showUrl', ['id' => $id]);
+            return redirect()->route('urls.show', ['id' => $id]);
         }
         //Переданный url новый для базы, добавляем в базу
         DB::table('urls')
             ->insert(['name' => $url, 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()]);
         Session::flash('message', 'Страница успешно добавлена');
         $id = DB::table('urls')->where('name', $url)->value('id');
-        return redirect()->route('showUrl', ['id' => $id]);
+        return redirect()->route('urls.show', ['id' => $id]);
     }
 
-    public function showUrls(): Application|View|Factory
+    public function store(): Application|View|Factory
     {
         $querry = DB::select('
         select id, name, updated_at, sel2.status as status_code from urls LEFT JOIN
@@ -60,7 +60,7 @@ class Engine extends Controller
         return view('urls', ['urls' => $urls]);
     }
 
-    public function showUrl(int $id): Application|View|Factory
+    public function show(int $id): Application|View|Factory
     {
         $url = DB::table('urls')->where('id', $id)->first();
         $dataOfCheck = DB::table('url_checks')
@@ -70,7 +70,7 @@ class Engine extends Controller
         return view('url', ['url' => $url, 'dataOfCheck' => $dataOfCheck, 'id' => $id]);
     }
 
-    public function checkUrl(CheckUrlValidator $request): RedirectResponse
+    public function update(CheckUrlValidator $request): RedirectResponse
     {
         $url_id = $request->input('id');
         $url = (array) DB::table('urls')->where('id', $url_id)->first();
@@ -79,8 +79,8 @@ class Engine extends Controller
         try {
             $response = Http::get($url['name']);
         } catch (\Exception $e) {
-            Session::flash('errors', $e->getMessage() . ' for ' . $url['name']);
-            return redirect()->route('showUrl', ['id' => $url_id]);
+            //Session::flash('errors', $e->getMessage() . ' for ' . $url['name']);
+            return redirect()->route('urls.show', ['id' => $url_id]);
         }
         $tags = $this->getTags($response, $url['name']);
 
@@ -99,7 +99,7 @@ class Engine extends Controller
             ->where('id', $url_id)
             ->update(['updated_at' => Carbon::now()]);
         Session::flash('message', 'Страница успешно проверена');
-        return redirect()->route('showUrl', ['id' => $url_id]);
+        return redirect()->route('urls.show', ['id' => $url_id]);
     }
 
     //Вспомогательные методы////////////////////////////////////////////////////////
