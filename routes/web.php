@@ -21,9 +21,9 @@ Route::get('/', function () {
 
 Route::get('urls', [Engine::class, 'store'])->name('urls.store');
 
-Route::get('/urls/{id}', [Engine::class, 'show'])->name('urls.show');
+Route::get('urls/{id}', [Engine::class, 'show'])->name('urls.show');
 
 
-Route::post('/urls', [Engine::class, 'create'])->name('urls.create');
+Route::post('urls', [Engine::class, 'create'])->name('urls.create');
 
-Route::post('/urls/{id}/checks', [Engine::class, 'update'])->name('urls.update');
+Route::post('urls/{id}/checks', [Engine::class, 'update'])->name('urls.update');
