@@ -95,10 +95,10 @@ class Engine extends Controller
             $request->all(),
             ['id' => [new CheckConnectToUrl()]]
         );
-        if ($checkConnectValid->stopOnFirstFailure()->fails()) {
-            $checkConnectValid->errors()->add('name', 'Ошибка подключения');
-            return redirect('/')->withErrors($checkConnectValid)->withInput();
-        }
+        /*if ($checkConnectValid->stopOnFirstFailure()->fails()) {
+            //$checkConnectValid->errors()->add('name', 'Ошибка подключения');
+            return redirect('urls.show')->withErrors($checkConnectValid)->withInput();
+        }*/
 
         $url_id = $request->input('id');
         $url = (array) DB::table('urls')->where('id', $url_id)->first();
