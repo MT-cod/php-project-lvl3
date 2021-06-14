@@ -33,7 +33,7 @@ class Engine extends Controller
         if ($validator->stopOnFirstFailure()->fails()) {
             Session::flash('errors', 'Некорректный URL');
             return redirect('/')
-                ->withErrors($validator)
+                //->withErrors($validator)
                 ->withInput();
         }
 
