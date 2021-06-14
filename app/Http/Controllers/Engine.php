@@ -24,22 +24,23 @@ class Engine extends Controller
 {
     public function create(Request $request): RedirectResponse
     {
-        $validator1 = Validator::make(
-            $request->all(),
-            ['url.name' => ['max:255']]
+        $request->validate(
+            ['url.name' => ['max:255']],
+            $messages = ['max' => ['string' => 'Некорректный URLs']]
         );
-        if ($validator1->stopOnFirstFailure()->fails()) {
-            $validator1->errors()->add('name', 'Длинный URL');
-            return redirect('/')->withErrors($validator1)->withInput();
-        }
-
-        $validator2 = Validator::make(
+        /*$validator = Validator::make(
+            $request->all(),
+            ['url.name' => ['bail', 'required', 'max:255']],
+            $messages = ['url.name.required' => 'Некорректный URL']
+        );*/
+        $validator = Validator::make(
             $request->all(),
             ['url.name' => [new CorrectUrlName()]]
         );
-        if ($validator2->stopOnFirstFailure()->fails()) {
-            $validator2->errors()->add('name', 'Некорректный URL');
-            return redirect('/')->withErrors($validator2)->withInput();
+        if ($validator->stopOnFirstFailure()->fails()) {
+            //Session::flash('errors.name', 'Некорректный URL4');
+            $validator->errors()->add('name', 'Некорректный URL');
+            return redirect('/')->withErrors($validator)->withInput();
         }
 
 
