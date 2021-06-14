@@ -21,10 +21,26 @@ use Illuminate\Support\Facades\Validator;
 
 class Engine extends Controller
 {
-    public function create(UrlValidator $request): RedirectResponse
+    public function create(Request $request): RedirectResponse
     {
+        //$validated = $request->validate(['url.name' => ['bail', 'required', 'max:255']]);
+        $validator = Validator::make(
+            $request->all(),
+            ['url.name' => ['bail', 'required', 'max:255']],
+            $messages = ['required' => 'Некорректный URL']
+        );
+
+        if ($validator->stopOnFirstFailure()->fails()) {
+            Session::flash('errors', 'Некорректный URL');
+            return redirect('/')
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+
         //Если url был добавлен с параметрами после имени домена, то избавляемся от них
-        $url = $this->filterUrl($request->input('url.name'));
+        //$url = $this->filterUrl($request->input('url.name'));
+        $url = $this->filterUrl($validated);
 
         //Проверяем на наличие переданного имени сайта в базе
         if (DB::table('urls')->where('name', '=', $url)->exists()) {

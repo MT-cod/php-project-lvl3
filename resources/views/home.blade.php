@@ -17,6 +17,8 @@
     </head>
     <body>
 
+    {{--@if(Session::has('errors'))
+        <div style="background-color: #ff885a">{{ Session::get('errors') }}</div>--}}
     @if ($errors->any())
         <div style="background-color: #ff885a">
             <div class="alert alert-success" role="alert">
