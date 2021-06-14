@@ -21,14 +21,14 @@ use Illuminate\Support\Facades\Validator;
 
 class Engine extends Controller
 {
-    public function create(Request $request): RedirectResponse
+    public function create(UrlValidator $request): RedirectResponse
     {
         //$validated = $request->validate(['url.name' => ['bail', 'required', 'max:255']]);
-        $validator = Validator::make(
+        /*$validator = Validator::make(
             $request->all(),
             ['url.name' => ['bail', 'required', 'max:255']],
             $messages = ['url.name.required' => 'Некорректный URL']
-        );
+        );*/
         /*$validator = Validator::make(
             $request->all(),
             ['url.name' => ['bail', 'required', 'max:255']]
@@ -40,7 +40,7 @@ class Engine extends Controller
                 );
             }
         });*/
-        if ($validator->stopOnFirstFailure()->fails()) {
+        /*if ($validator->stopOnFirstFailure()->fails()) {
             //Session::flash('errors', 'Некорректный URL');
             $validator->errors()->add(
                 'name', 'Некорректный URL'
@@ -48,7 +48,7 @@ class Engine extends Controller
             return redirect('/')
                 ->withErrors($validator)
                 ->withInput();
-        }
+        }*/
 
 
         //Если url был добавлен с параметрами после имени домена, то избавляемся от них
