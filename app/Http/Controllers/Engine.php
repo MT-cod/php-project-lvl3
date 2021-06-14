@@ -87,10 +87,13 @@ class Engine extends Controller
 
     public function update(Request $request): RedirectResponse
     {
-        Validator::make($request->all(), ['id' => [new CheckConnectToUrl()]]);
+        Validator::make($request->all(), ['id' => [new CheckConnectToUrl()]])->validate();
 
         $url_id = $request->input('id');
         $urlName = DB::table('urls')->where('id', $url_id)->value('name');
+        if (empty($urlName)) {
+            return redirect('/');
+        }
 
         //Повторно проверяем подключение и собираем инфу по тегам и пишем данные по проверке подключения
         /*try {*/
