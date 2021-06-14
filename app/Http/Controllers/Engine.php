@@ -32,7 +32,7 @@ class Engine extends Controller
         );*/
         $validator = Validator::make(
             $request->all(),
-            ['url.name' => [new CorrectUrlName]]
+            ['url.name' => ['bail', 'max:255', new CorrectUrlName]]
         );
         /*$validator->after(function ($validator) {
             if ($validator->fails()) {
