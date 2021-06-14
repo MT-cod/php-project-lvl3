@@ -3,9 +3,9 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use App\Rules\Urlname;
+use App\Rules\CorrectUrlName;
 
-class UrlValidator extends FormRequest
+class UrlNameValidator extends FormRequest
 {
     /**
      * @return array
@@ -23,6 +23,6 @@ class UrlValidator extends FormRequest
      */
     public function rules()
     {
-        return ['url.name' => ['bail', new Urlname()]];
+        return ['url.name' => [new CorrectUrlName()]];
     }
 }

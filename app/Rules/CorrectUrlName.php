@@ -4,7 +4,7 @@ namespace App\Rules;
 
 use Illuminate\Contracts\Validation\Rule;
 
-class Urlname implements Rule
+class CorrectUrlName implements Rule
 {
     /**
      * @param  string  $attribute
@@ -22,7 +22,7 @@ class Urlname implements Rule
     }
 
     /**
-     * @return string
+     * @return array
      */
     public function message()
     {

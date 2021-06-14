@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CheckUrlValidator;
 use App\Rules\CheckConnectToUrl;
+use App\Rules\CorrectUrlName;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
@@ -15,13 +16,13 @@ use Carbon\Carbon;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\View;
 use Illuminate\Contracts\View\Factory;
-use App\Http\Requests\UrlValidator;
+use App\Http\Requests\UrlNameValidator;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 
 class Engine extends Controller
 {
-    public function create(UrlValidator $request): RedirectResponse
+    public function create(Request $request): RedirectResponse
     {
         //$validated = $request->validate(['url.name' => ['bail', 'required', 'max:255']]);
         /*$validator = Validator::make(
@@ -29,10 +30,10 @@ class Engine extends Controller
             ['url.name' => ['bail', 'required', 'max:255']],
             $messages = ['url.name.required' => 'Некорректный URL']
         );*/
-        /*$validator = Validator::make(
+        $validator = Validator::make(
             $request->all(),
-            ['url.name' => ['bail', 'required', 'max:255']]
-        );*/
+            ['url.name' => [new CorrectUrlName]]
+        );
         /*$validator->after(function ($validator) {
             if ($validator->fails()) {
                 $validator->errors()->add(
@@ -40,15 +41,15 @@ class Engine extends Controller
                 );
             }
         });*/
-        /*if ($validator->stopOnFirstFailure()->fails()) {
+        if ($validator->stopOnFirstFailure()->fails()) {
             //Session::flash('errors', 'Некорректный URL');
-            $validator->errors()->add(
+            /*$validator->errors()->add(
                 'name', 'Некорректный URL'
-            );
+            );*/
             return redirect('/')
                 ->withErrors($validator)
                 ->withInput();
-        }*/
+        }
 
 
         //Если url был добавлен с параметрами после имени домена, то избавляемся от них
