@@ -31,6 +31,11 @@ class Engine extends Controller
 
         Validator::make(
             $request->all(),
+            ['url.name' => ['required']]
+        )->validateWithBag('name');
+
+        Validator::make(
+            $request->all(),
             ['url.name' => [new CorrectUrlName()]]
         )->validateWithBag('name');
 
@@ -84,22 +89,18 @@ class Engine extends Controller
     public function update(Request $request): RedirectResponse
     {
         Validator::make($request->all(), ['id' => [new CheckConnectToUrl()]]);
-        /*if ($checkConnectValid->stopOnFirstFailure()->fails()) {
-            //$checkConnectValid->errors()->add('name', 'Ошибка подключения');
-            return redirect('urls.show')->withErrors($checkConnectValid)->withInput();
-        }*/
 
         $url_id = $request->input('id');
-        $url = (array) DB::table('urls')->where('id', $url_id)->first();
+        $urlName = DB::table('urls')->where('id', $url_id)->value('name');
 
         //Повторно проверяем подключение и собираем инфу по тегам и пишем данные по проверке подключения
         /*try {*/
-            $response = Http::get($url['name']);
+            $response = Http::get($urlName);
         /*} catch (\Exception $e) {
             Session::flash('errors', $e->getMessage() . ' for ' . $url['name']);
             return redirect()->route('urls.show', ['id' => $url_id]);
         }*/
-        $tags = $this->getTags($response, $url['name']);
+        $tags = $this->getTags($response, $urlName);
 
         DB::table('url_checks')->insert(
             [
