@@ -39,8 +39,8 @@ class Engine extends Controller
 
 
         //Если url был добавлен с параметрами после имени домена, то избавляемся от них
-        //$url = $this->filterUrl($request->input('url.name'));
-        $url = $this->filterUrl($validated);
+        $url = $this->filterUrl($request->input('url.name'));
+        //$url = $this->filterUrl($validated);
 
         //Проверяем на наличие переданного имени сайта в базе
         if (DB::table('urls')->where('name', '=', $url)->exists()) {
