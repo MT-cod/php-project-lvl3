@@ -26,18 +26,18 @@ class Engine extends Controller
     {
         Validator::make(
             $request->all(),
-            ['url.name' => ['max:255']]
+            ['url.name' => 'bail|required|max:255']
         )->validateWithBag('name');
 
-        Validator::make(
+        /*Validator::make(
             $request->all(),
-            ['url.name' => ['required']]
-        )->validateWithBag('name');
+            ['url.name' => ['max:255']]
+        )->validateWithBag('name');*/
 
-        Validator::make(
+        /*Validator::make(
             $request->all(),
             ['url.name' => [new CorrectUrlName()]]
-        )->validateWithBag('name');
+        )->validateWithBag('name');*/
 
         //Если url был добавлен с параметрами после имени домена, то избавляемся от них
         $url = $this->filterUrl($request->input('url.name'));
