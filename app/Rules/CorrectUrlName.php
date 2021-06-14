@@ -15,7 +15,7 @@ class CorrectUrlName implements Rule
     {
         $scheme = (string) parse_url($value, PHP_URL_SCHEME);
         $host = (string) parse_url($value, PHP_URL_HOST);
-        if (($scheme == 'http' || $scheme == 'https') && !empty($host) && mb_strlen($value) < 256) {
+        if (($scheme == 'http' || $scheme == 'https') && !empty($host)) {
             return true;
         }
         return false;

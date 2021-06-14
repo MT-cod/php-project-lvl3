@@ -24,7 +24,7 @@ class Engine extends Controller
 {
     public function create(Request $request): RedirectResponse
     {
-        //$validated = $request->validate(['url.name' => ['bail', 'required', 'max:255']]);
+        $request->validate(['url.name' => ['max:255']]);
         /*$validator = Validator::make(
             $request->all(),
             ['url.name' => ['bail', 'required', 'max:255']],
@@ -32,7 +32,7 @@ class Engine extends Controller
         );*/
         $validator = Validator::make(
             $request->all(),
-            ['url.name' => ['bail', 'max:255', new CorrectUrlName]]
+            ['url.name' => [new CorrectUrlName()]]
         );
         /*$validator->after(function ($validator) {
             if ($validator->fails()) {
@@ -43,12 +43,8 @@ class Engine extends Controller
         });*/
         if ($validator->stopOnFirstFailure()->fails()) {
             //Session::flash('errors.name', 'Некорректный URL4');
-            $validator->errors()->add(
-                'name', 'Некорректный URL'
-            );
-            return redirect('/')
-                ->withErrors($validator)
-                ->withInput();
+            $validator->errors()->add('name', 'Некорректный URL');
+            return redirect('/')->withErrors($validator)->withInput();
         }
 
 
