@@ -24,24 +24,22 @@ class Engine extends Controller
 {
     public function create(Request $request): RedirectResponse
     {
-        $validator1 = Validator::make(
+        $nameValidator1 = Validator::make(
             $request->all(),
             ['url.name' => ['max:255']]
         );
-        if ($validator1->stopOnFirstFailure()->fails()) {
-            $validator1->errors()->add('name', 'Длинный URL');
-            return redirect('/')->withErrors($validator1)->withInput();
+        if ($nameValidator1->stopOnFirstFailure()->fails()) {
+            $nameValidator1->errors()->add('name', 'Длинный URL');
+            return redirect('/')->withErrors($nameValidator1)->withInput();
         }
-
-        $validator2 = Validator::make(
+        $nameValidator2 = Validator::make(
             $request->all(),
             ['url.name' => [new CorrectUrlName()]]
         );
-        if ($validator2->stopOnFirstFailure()->fails()) {
-            $validator2->errors()->add('name', 'Некорректный URL');
-            return redirect('/')->withErrors($validator2)->withInput();
+        if ($nameValidator2->stopOnFirstFailure()->fails()) {
+            $nameValidator2->errors()->add('name', 'Некорректный URL');
+            return redirect('/')->withErrors($nameValidator2)->withInput();
         }
-
 
         //Если url был добавлен с параметрами после имени домена, то избавляемся от них
         $url = $this->filterUrl($request->input('url.name'));
@@ -91,8 +89,17 @@ class Engine extends Controller
         return view('url', ['url' => $url, 'dataOfCheck' => $dataOfCheck, 'id' => $id]);
     }
 
-    public function update(CheckUrlValidator $request): RedirectResponse
+    public function update(Request $request): RedirectResponse
     {
+        $checkConnectValid = Validator::make(
+            $request->all(),
+            ['id' => [new CheckConnectToUrl()]]
+        );
+        if ($checkConnectValid->stopOnFirstFailure()->fails()) {
+            $checkConnectValid->errors()->add('name', 'Ошибка подключения');
+            return redirect('/')->withErrors($checkConnectValid)->withInput();
+        }
+
         $url_id = $request->input('id');
         $url = (array) DB::table('urls')->where('id', $url_id)->first();
 
