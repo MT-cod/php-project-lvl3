@@ -24,27 +24,22 @@ class Engine extends Controller
 {
     public function create(Request $request): RedirectResponse
     {
-        $request->validate(['url.name' => ['max:255']]);
-        /*$validator = Validator::make(
+        $validator1 = Validator::make(
             $request->all(),
-            ['url.name' => ['bail', 'required', 'max:255']],
-            $messages = ['url.name.required' => 'Некорректный URL']
-        );*/
-        $validator = Validator::make(
+            ['url.name' => ['max:255']]
+        );
+        if ($validator1->stopOnFirstFailure()->fails()) {
+            $validator1->errors()->add('name', 'Длинный URL');
+            return redirect('/')->withErrors($validator1)->withInput();
+        }
+
+        $validator2 = Validator::make(
             $request->all(),
             ['url.name' => [new CorrectUrlName()]]
         );
-        /*$validator->after(function ($validator) {
-            if ($validator->fails()) {
-                $validator->errors()->add(
-                    'url.name', 'Некорректный URLSomething is wrong with this field!'
-                );
-            }
-        });*/
-        if ($validator->stopOnFirstFailure()->fails()) {
-            //Session::flash('errors.name', 'Некорректный URL4');
-            $validator->errors()->add('name', 'Некорректный URL');
-            return redirect('/')->withErrors($validator)->withInput();
+        if ($validator2->stopOnFirstFailure()->fails()) {
+            $validator2->errors()->add('name', 'Некорректный URL');
+            return redirect('/')->withErrors($validator2)->withInput();
         }
 
 
