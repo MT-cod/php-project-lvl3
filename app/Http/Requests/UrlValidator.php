@@ -23,6 +23,6 @@ class UrlValidator extends FormRequest
      */
     public function rules()
     {
-        return ['url.name' => ['bail', 'max:255', new Urlname()]];
+        return ['url.name' => ['bail', 'max:255']];
     }
 }
