@@ -42,10 +42,10 @@ class Engine extends Controller
             }
         });*/
         if ($validator->stopOnFirstFailure()->fails()) {
-            //Session::flash('errors', 'Некорректный URL');
-            /*$validator->errors()->add(
+            //Session::flash('errors.name', 'Некорректный URL4');
+            $validator->errors()->add(
                 'name', 'Некорректный URL'
-            );*/
+            );
             return redirect('/')
                 ->withErrors($validator)
                 ->withInput();

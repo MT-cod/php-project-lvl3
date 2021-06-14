@@ -22,10 +22,10 @@ class CorrectUrlName implements Rule
     }
 
     /**
-     * @return array
+     * @return string
      */
     public function message()
     {
-        return ['name' => 'Некорректный URL'];
+        return 'Некорректный URL';
     }
 }

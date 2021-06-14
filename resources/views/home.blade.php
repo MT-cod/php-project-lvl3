@@ -21,11 +21,7 @@
         <div style="background-color: #ff885a">{{ Session::get('errors') }}</div>--}}
     @if ($errors->any())
         <div style="background-color: #ff885a">
-            <div class="alert alert-success" role="alert">
-                @foreach ($errors->all() as $error)
-                    {{ $error }}
-                @endforeach
-            </div>
+            {{ $errors->first() }}
         </div>
     @else
         <br>
