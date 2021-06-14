@@ -23,6 +23,12 @@
         <div style="background-color: #ff885a">
             {{ $errors->name->first() }}
         </div>
+    @elseif ($errors->any())
+        <div style="background-color: #ff885a">
+            @foreach ($errors->all() as $error)
+                {{ $error }}
+            @endforeach
+        </div>
     @else
         <br>
     @endif
