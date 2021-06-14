@@ -27,13 +27,13 @@ class Engine extends Controller
         $validator = Validator::make(
             $request->all(),
             ['url.name' => ['bail', 'required', 'max:255']],
-            $messages = ['required' => 'Некорректный URL']
+            $messages = ['url.name.required' => 'Некорректный URL']
         );
 
         if ($validator->stopOnFirstFailure()->fails()) {
-            Session::flash('errors', 'Некорректный URL');
+            //Session::flash('errors', 'Некорректный URL');
             return redirect('/')
-                //->withErrors($validator)
+                ->withErrors($validator)
                 ->withInput();
         }
 
