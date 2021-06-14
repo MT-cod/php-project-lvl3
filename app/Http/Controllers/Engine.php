@@ -104,12 +104,12 @@ class Engine extends Controller
         $url = (array) DB::table('urls')->where('id', $url_id)->first();
 
         //Повторно проверяем подключение и собираем инфу по тегам и пишем данные по проверке подключения
-        try {
+        /*try {*/
             $response = Http::get($url['name']);
-        } catch (\Exception $e) {
-            //Session::flash('errors', $e->getMessage() . ' for ' . $url['name']);
+        /*} catch (\Exception $e) {
+            Session::flash('errors', $e->getMessage() . ' for ' . $url['name']);
             return redirect()->route('urls.show', ['id' => $url_id]);
-        }
+        }*/
         $tags = $this->getTags($response, $url['name']);
 
         DB::table('url_checks')->insert(
