@@ -19,6 +19,7 @@
 
     {{--@if(Session::has('errors'))
         <div style="background-color: #ff885a">{{ Session::get('errors') }}</div>--}}
+    {{ $errors->name->first() }}
     @if ($errors->any())
         <div style="background-color: #ff885a">
             @foreach ($errors->all() as $error)

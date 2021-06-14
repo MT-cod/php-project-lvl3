@@ -35,10 +35,10 @@ class Engine extends Controller
         $nameValidator2 = Validator::make(
             $request->all(),
             ['url.name' => [new CorrectUrlName()]]
-        );
+        )->validateWithBag('name');
         if ($nameValidator2->stopOnFirstFailure()->fails()) {
-            $nameValidator2->errors()->add('name', 'Некорректный URL');
-            return redirect('/')->withErrors($nameValidator2)->withInput();
+            //$nameValidator2->errors()->add('name', 'Некорректный URL');
+            return redirect('/')->withErrors($nameValidator2, 'name')->withInput();
         }
 
         //Если url был добавлен с параметрами после имени домена, то избавляемся от них
@@ -91,10 +91,7 @@ class Engine extends Controller
 
     public function update(Request $request): RedirectResponse
     {
-        $checkConnectValid = Validator::make(
-            $request->all(),
-            ['id' => [new CheckConnectToUrl()]]
-        );
+        Validator::make($request->all(), ['id' => [new CheckConnectToUrl()]]);
         /*if ($checkConnectValid->stopOnFirstFailure()->fails()) {
             //$checkConnectValid->errors()->add('name', 'Ошибка подключения');
             return redirect('urls.show')->withErrors($checkConnectValid)->withInput();
