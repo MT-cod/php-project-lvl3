@@ -29,7 +29,7 @@ class Engine extends Controller
         //Проверяем на наличие переданного имени сайта в базе
         if (DB::table('urls')->where('name', '=', $url)->exists()) {
             $id = DB::table('urls')->where('name', $url)->value('id');
-            Session::flash('message', 'Страница уже существует');
+            Session::flash('errors', 'Страница уже существует');
             return redirect()->route('urls.show', ['id' => $id]);
         }
         //Переданный url новый для базы, добавляем в базу
