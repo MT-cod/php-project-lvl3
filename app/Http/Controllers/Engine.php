@@ -24,10 +24,14 @@ class Engine extends Controller
 {
     public function create(Request $request): RedirectResponse
     {
-        Validator::make(
+        $nameValidator1 = Validator::make(
             $request->all(),
-            ['url.name' => 'max:255']
-        )->validateWithBag('name');
+            ['url.name' => ['max:255']]
+        );
+        if ($nameValidator1->stopOnFirstFailure()->fails()) {
+            $nameValidator1->errors()->add('name', 'Длинный URL');
+            return redirect('/')->withErrors($nameValidator1)->withInput();
+        }
 
         $nameValidator2 = Validator::make(
             $request->all(),
