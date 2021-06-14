@@ -17,7 +17,7 @@
     </head>
     <body>
 
-    @if ($errors->any())
+    {{--@if ($errors->any())
         <div style="background-color: #ff885a">
             <div class="alert alert-success" role="alert">
                 @foreach ($errors->all() as $error)
@@ -27,7 +27,7 @@
         </div>
     @else
         <br>
-    @endif
+    @endif--}}
 
         <a class="nav-link" href="/">[Анализатор страниц]</a>
         <a class="nav-link" href="/urls">[Все добавленные страницы]</a>
