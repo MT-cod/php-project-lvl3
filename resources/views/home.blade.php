@@ -19,12 +19,9 @@
 
     {{--@if(Session::has('errors'))
         <div style="background-color: #ff885a">{{ Session::get('errors') }}</div>--}}
-    {{ $errors->name->first() }}
-    @if ($errors->any())
+    @if ($errors->name->first())
         <div style="background-color: #ff885a">
-            @foreach ($errors->all() as $error)
-                {{ $error }}
-            @endforeach
+            {{ $errors->name->first() }}
         </div>
     @else
         <br>
