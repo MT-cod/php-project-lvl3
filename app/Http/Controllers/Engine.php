@@ -107,7 +107,7 @@ class Engine extends Controller
         try {
             $response = Http::get($url['name']);
         } catch (\Exception $e) {
-            Session::flash('errors', $e->getMessage() . ' for ' . $url['name']);
+            //Session::flash('errors', $e->getMessage() . ' for ' . $url['name']);
             return redirect()->route('urls.show', ['id' => $url_id]);
         }
         $tags = $this->getTags($response, $url['name']);
