@@ -21,7 +21,7 @@ Route::get('/', function () {
 
 Route::get('urls', [Engine::class, 'store'])->name('urls.store');
 
-Route::get('urls/{id}', [Engine::class, 'show'])->name('urls.show');
+Route::get('urls/{id}', [Engine::class, 'show'])->name('urls.show')->whereNumber('id');
 
 
 Route::post('urls', [Engine::class, 'create'])->name('urls.create');
