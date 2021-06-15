@@ -91,7 +91,7 @@ class Engine extends Controller
 
     public function update(Request $request): RedirectResponse
     {
-        Validator::make($request->all(), ['id' => 'required'])->validate();
+        //Validator::make($request->all(), ['id' => 'required'])->validate();
 
         Validator::make($request->all(), ['id' => [new CheckConnectToUrl()]])->validate();
 
