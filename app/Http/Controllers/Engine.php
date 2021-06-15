@@ -96,18 +96,21 @@ class Engine extends Controller
         Validator::make($request->all(), ['id' => [new CheckConnectToUrl()]])->validate();
 
         $url_id = $request->input('id');
+        if ($url_id == 0 || $url_id == null || $url_id == false) {
+            exit;
+        }
         $urlName = DB::table('urls')->where('id', $url_id)->value('name');
         /*if (empty($urlName)) {
             return redirect()->route('urls.show', ['id' => $url_id]);
         }*/
 
         //Повторно проверяем подключение и собираем инфу по тегам и пишем данные по проверке подключения
-        /*try {*/
+        try {
             $response = Http::get($urlName);
-        /*} catch (\Exception $e) {
-            Session::flash('errors', $e->getMessage() . ' for ' . $url['name']);
+        } catch (\Exception $e) {
+            Session::flash('errors', $e->getMessage());
             return redirect()->route('urls.show', ['id' => $url_id]);
-        }*/
+        }
         $tags = $this->getTags($response, $urlName);
 
         DB::table('url_checks')->insert(
