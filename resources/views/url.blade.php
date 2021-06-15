@@ -20,8 +20,6 @@
 
         @if(Session::has('message'))
             <div style="background-color: #7fe2b4">{{ Session::get('message') }}</div>
-        {{--@elseif(Session::has('errors'))
-            <div style="background-color: #ff885a">{{ Session::get('errors') }}</div>--}}
         @elseif ($errors->any())
             <div style="background-color: #ff885a">
                 @foreach ($errors->all() as $error)

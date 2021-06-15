@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\CheckUrlValidator;
 use App\Rules\CheckConnectToUrl;
 use App\Rules\CorrectUrlName;
 use Illuminate\Database\Eloquent\Collection;
@@ -16,7 +15,6 @@ use Carbon\Carbon;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\View;
 use Illuminate\Contracts\View\Factory;
-use App\Http\Requests\UrlNameValidator;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 
@@ -92,7 +90,6 @@ class Engine extends Controller
     public function update(Request $request): RedirectResponse
     {
         Validator::make($request->all(), ['id' => 'exists:urls'])->validate();
-
         Validator::make($request->all(), ['id' => [new CheckConnectToUrl()]])->validate();
 
         $url_id = $request->input('id');
@@ -100,9 +97,6 @@ class Engine extends Controller
             exit;
         }
         $urlName = DB::table('urls')->where('id', $url_id)->value('name');
-        /*if (empty($urlName)) {
-            return redirect()->route('urls.show', ['id' => $url_id]);
-        }*/
 
         //Повторно проверяем подключение и собираем инфу по тегам и пишем данные по проверке подключения
         try {
