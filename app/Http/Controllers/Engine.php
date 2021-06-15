@@ -135,9 +135,10 @@ class Engine extends Controller
     public function getTags(Response $response, string $url): array
     {
         if ($response->successful()) {
+            $tags = [];
             $h1Search = preg_match('/(?<=h1>).+(?=<\/h1>)/', $response->body(), $h1);
             $tags['h1'] = ($h1Search > 0) ? $h1[0] : '';
-            $metaTagsSearch = get_meta_tags($url) ?: [];
+            $metaTagsSearch = (get_meta_tags($url) !== false) ? get_meta_tags($url) : [];
             $tags['keywords'] = array_key_exists('keywords', $metaTagsSearch)
             ? $metaTagsSearch['keywords']
             : '';
