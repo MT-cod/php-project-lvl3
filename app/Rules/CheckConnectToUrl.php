@@ -17,9 +17,9 @@ class CheckConnectToUrl implements Rule
      */
     public function passes($attribute, $value)
     {
-        $url = (array) DB::table('urls')->where('id', $value)->first();
+        $urlName = DB::table('urls')->where('id', $value)->value('name');
         try {
-            Http::get($url['name']);
+            Http::get($urlName);
         } catch (\Exception $e) {
             $this->curlError = $e->getMessage();
             return false;
