@@ -1,97 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="51b6f765-1360-465c-8143-aaef2303588e" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/dbnavigator.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../php-project-lvl4/.editorconfig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../php-project-lvl4/.env.example" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../php-project-lvl4/.gitattributes" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../php-project-lvl4/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../php-project-lvl4/.styleci.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../php-project-lvl4/Makefile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../php-project-lvl4/Procfile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../php-project-lvl4/app/Console/Kernel.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../php-project-lvl4/app/Exceptions/Handler.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../php-project-lvl4/app/Http/Controllers/Controller.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../php-project-lvl4/app/Http/Kernel.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../php-project-lvl4/app/Http/Middleware/Authenticate.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../php-project-lvl4/app/Http/Middleware/EncryptCookies.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../php-project-lvl4/app/Http/Middleware/PreventRequestsDuringMaintenance.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../php-project-lvl4/app/Http/Middleware/RedirectIfAuthenticated.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../php-project-lvl4/app/Http/Middleware/TrimStrings.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../php-project-lvl4/app/Http/Middleware/TrustHosts.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../php-project-lvl4/app/Http/Middleware/TrustProxies.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../php-project-lvl4/app/Http/Middleware/VerifyCsrfToken.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../php-project-lvl4/app/Models/User.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../php-project-lvl4/app/Providers/AppServiceProvider.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../php-project-lvl4/app/Providers/AuthServiceProvider.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../php-project-lvl4/app/Providers/BroadcastServiceProvider.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../php-project-lvl4/app/Providers/EventServiceProvider.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../php-project-lvl4/app/Providers/RouteServiceProvider.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../php-project-lvl4/artisan" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../php-project-lvl4/bootstrap/app.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../php-project-lvl4/bootstrap/cache/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../php-project-lvl4/composer.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../php-project-lvl4/composer.lock" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../php-project-lvl4/config/app.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../php-project-lvl4/config/auth.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../php-project-lvl4/config/broadcasting.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../php-project-lvl4/config/cache.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../php-project-lvl4/config/cors.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../php-project-lvl4/config/database.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../php-project-lvl4/config/filesystems.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../php-project-lvl4/config/hashing.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../php-project-lvl4/config/logging.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../php-project-lvl4/config/mail.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../php-project-lvl4/config/queue.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../php-project-lvl4/config/services.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../php-project-lvl4/config/session.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../php-project-lvl4/config/view.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../php-project-lvl4/database/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../php-project-lvl4/database/factories/UserFactory.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../php-project-lvl4/database/migrations/2014_10_12_000000_create_users_table.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../php-project-lvl4/database/migrations/2014_10_12_100000_create_password_resets_table.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../php-project-lvl4/database/migrations/2019_08_19_000000_create_failed_jobs_table.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../php-project-lvl4/database/seeders/DatabaseSeeder.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../php-project-lvl4/package.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../php-project-lvl4/phpunit.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../php-project-lvl4/public/.htaccess" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../php-project-lvl4/public/favicon.ico" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../php-project-lvl4/public/index.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../php-project-lvl4/public/robots.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../php-project-lvl4/public/web.config" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../php-project-lvl4/resources/css/app.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../php-project-lvl4/resources/js/app.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../php-project-lvl4/resources/js/bootstrap.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../php-project-lvl4/resources/lang/en/auth.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../php-project-lvl4/resources/lang/en/pagination.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../php-project-lvl4/resources/lang/en/passwords.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../php-project-lvl4/resources/lang/en/validation.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../php-project-lvl4/resources/views/welcome.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../php-project-lvl4/routes/api.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../php-project-lvl4/routes/channels.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../php-project-lvl4/routes/console.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../php-project-lvl4/routes/web.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../php-project-lvl4/server.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../php-project-lvl4/storage/app/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../php-project-lvl4/storage/app/public/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../php-project-lvl4/storage/framework/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../php-project-lvl4/storage/framework/cache/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../php-project-lvl4/storage/framework/cache/data/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../php-project-lvl4/storage/framework/sessions/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../php-project-lvl4/storage/framework/testing/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../php-project-lvl4/storage/framework/views/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../php-project-lvl4/storage/logs/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../php-project-lvl4/tests/CreatesApplication.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../php-project-lvl4/tests/Feature/ExampleTest.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../php-project-lvl4/tests/TestCase.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../php-project-lvl4/tests/Unit/ExampleTest.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../php-project-lvl4/webpack.mix.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/php-project-lvl3.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php-project-lvl3.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="51b6f765-1360-465c-8143-aaef2303588e" name="Default Changelist" comment="1" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -102,7 +12,7 @@
     <execution />
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../php-project-lvl4" />
   </component>
   <component name="PhpWorkspaceProjectConfiguration">
     <include_path>
@@ -255,8 +165,16 @@
       <updated>1621457553003</updated>
       <workItem from="1621457557059" duration="31000" />
       <workItem from="1621457608364" duration="7000" />
-      <workItem from="1626440881363" duration="1479000" />
+      <workItem from="1626440881363" duration="2181000" />
     </task>
+    <task id="LOCAL-00001" summary="1">
+      <created>1626443338838</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1626443338838</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -275,5 +193,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+    <MESSAGE value="1" />
+    <option name="LAST_COMMIT_MESSAGE" value="1" />
   </component>
 </project>
