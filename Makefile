@@ -20,7 +20,7 @@ console:
 	php artisan tinker
 
 log:
-	tail -f storage/logs/laravel.log
+	tail  -f storage/logs/laravel.log
 
 test:
 	touch tests/database.sqlite
