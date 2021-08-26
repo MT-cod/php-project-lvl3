@@ -20,3 +20,9 @@
 
 ## Развёрнутый проект на Heroku:
 <a href="https://mt-cod-php-project-lvl3.herokuapp.com/">mt-cod-php-project-lvl3.herokuapp.com</a>
+
+## Готовый docker-образ с проектом:
+<a href="https://hub.docker.com/r/mtcod/php-project-lvl3">mtcod/php-project-lvl3</a>
+
+######Пример загрузки и запуска контейнера проекта:
+docker run -p 80:8000 -d mtcod/php-project-lvl3 php /srv/php-project-lvl3/artisan serve --host 0.0.0.0
